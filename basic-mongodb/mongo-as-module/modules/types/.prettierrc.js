@@ -1,0 +1,1 @@
+C:/Users/DESKTOP/Desktop/mongoModule/common/template/.prettierrc.js

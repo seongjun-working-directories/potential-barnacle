@@ -1,0 +1,27 @@
+1.
+<포스트맨(postman)>
+Postman은 개발한 API를 테스트하고,
+테스트 결과를 공유하여 API 개발의 생산성을 높여주는 플랫폼.
+https://www.postman.com/downloads/
+https://meetup.toast.com/posts/107
+
+2.
+<인피니트 스크롤링(Infinite Scrolling)>
+예제 사이트: https://unsplash.com/
+Unsplash나 Pinterest처럼 무한히 스크롤을 내리면서 이미지 데이터를 받아오는 사이트는
+주로 react 등으로 구현한 SPA(Single Page Application)임.
+그런데, 이러한 사이트들의 문제점은 자바스크립트로 이미지를 받아오기 때문에,
+axios와 cheerio 조합으로는 빈 공간을 스크립트하게 된다는 것임.
+따라서, puppeteer를 활용해 웹 사이트를 직접 움직이며 크롤링해야 함.
+위와 같이 axios와 cheerio로 크롤링이 가능한지 여부를 판단하기 위해
+포스트맨(Postman)을 사용할 수 있음.
+
+3.
+포스트맨에서 axios와 cheerio로 웹 크롤링이 가능한지 확인하는 방법.
+(1) My Workspace 옆의 New 버튼을 누르고 HTTP Request를 선택.
+(2) Enter request URL에 검색하고자 하는 링크를 넣음.
+(3) Pretty를 Preview로 바꿨을 때 사진들이 하나도 없다면, axios와 cheerio 사용 불가.
+(4) Puppeteer를 활용해 크롤링해야 함.
+(5) 이미지를 크롤링할 때 가장 중요한 것은 img 태그의 src 속성.
+
+4.

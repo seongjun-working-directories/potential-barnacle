@@ -1,0 +1,62 @@
+0.
+Referenced By:
+https://www.youtube.com/watch?v=fbYExfeFsI0&list=RDCMUCK_m2976Yvbx-TyDLw7n1WA&start_radio=1&rv=fbYExfeFsI0&t=9
+https://github.com/mongodb-developer/nodejs-quickstart
+
+1.
+[ commands ]
+npm init -y
+npm install mongodb
+npm list mongodb
+
+2.
+Mongodb Atlas 사용법
+https://iteastory.com/194
+
+3.
+Mongodb Atlas 링크
+https://www.mongodb.com/cloud/atlas/lp/try2?utm_source=google&utm_campaign=gs_apac_south_korea_search_core_brand_atlas_desktop&utm_term=mongodb%20atlas&utm_medium=cpc_paid_search&utm_ad=e&utm_ad_campaign_id=12212624365&adgroup=115749706543&gclid=EAIaIQobChMIjInk9L6y-QIVExBgCh1bZQB5EAAYASAAEgKVHPD_BwE
+
+4.
+(1) Mongodb Atlas 회원가입
+(2) Mongodb Clusters 생성 ex) Cluster0
+(3) Mongodb Cluster0에서 더보기 버튼을 눌러 `Load Sample Dataset`을 클릭
+(4) Connect 버튼 누르기
+(5) Connect your application 클릭
+(6) mongodb+srv://hamish-official:<password>@cluster0.qxy53z0.mongodb.net/?retryWrites=true&w=majority
+(7) 6번과 같은 connection string을 복사하고 설정해둔 password로 `<password>` 대체
+
+5.
+Mongodb는 bson document들로 데이터를 저장함
+bson은 json의 binary representation 이고, json은 javascript object 개념임
+Mongodb의 Document는 javascript object라고 생각하면 됨
+Document === Row in SQL
+Collection === Table in SQL
+
+6.
+모든 document는 '_id'라는 필드를 가지고 있어야 함
+그리고 '_id'의 값은 unqiue해야 함
+
+7.
+MongoServerSelectionError: connection <monitor> to 3.39.38.3:27017 closed
+    at Timeout._onTimeout
+-> 위와 같은 에러가 뜰 경우, Network Access에서 IP 주소를 현재 주소로 변경할 것
+
+8.
+[ 트랜젝션(Transcation) ]
+여러작업들을 하나로 묶은 단위입니다.
+한 덩어리의 작업들은 모두 실행되거나, 실행되지 않습니다.
+(all-or-nothing)
+
+[ ACID = Atomicity, Consistency, Isolation, Durability ]
+데이터베이스 트랜잭션이 안전하게 수행된다는 것을 보장하기 위한 성질.
+(1) 원자성(Atomicity)
+트랜잭션과 관련된 작업들이 부분적으로 실행되다가 중단되지 않는 것을 보장하는 능력.
+(2) 일관성(Consistency)
+트랜잭션이 실행을 성공적으로 완료하면 언제나 일관성 있는 데이터베이스 상태로 유지하는 것.
+(3) 독립성(Isolation)
+트랜잭션을 수행 시 다른 트랜잭션의 연산 작업이 끼어들지 못하도록 보장하는 것.
+(4) 지속성(Durability)
+성공적으로 수행된 트랜잭션은 영원히 반영되어야 함.
+
+9.

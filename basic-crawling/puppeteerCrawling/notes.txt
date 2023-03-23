@@ -1,0 +1,15 @@
+1.
+npm install puppeteer xlsx csv-parse
+
+2.
+puppeteer는 크로미움 브라우저(크롬 기반).
+전부 비동기로 처리되므로, await 키워드를 함께 써야 함.
+
+3.
+https://github.com/puppeteer/puppeteer/blob/v13.3.2/docs/api.md
+
+4.
+csv에 데이터를 입력하려면 csv-stringify 패키지가 필요
+-> npm install csv-stringify
+
+5.

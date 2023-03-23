@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<body>
+    <input type="text">
+    <div class="msg"></div>
+    <script>
+        // Document.querySelector()
+        // -> 제공한 CSS 선택자 또는 선택자 뭉치와 일치하는 첫 번째 Element를 반환.
+        const $input = document.querySelector('input');
+        const $msg = document.querySelector('.msg');
+
+        const debounce = (callback, delay) => {
+            // debounce 함수는 timerId를 기억하는 클로저 반환.
+            let timerId;
+            return event => {
+                // delay가 경과하기 이전에 이벤트가 발생하면,
+                // 이전 타이머를 취소하고 새로운 타이머를 재설정.
+                if (timerId) clearTimeout(timerId);
+                // 콜백 함수, 설정한 시간, 콜백 함수의 매개변수 순.
+                timerId = setTimeout(callback, delay, event);
+            };
+        };
+
+        // oninput 이벤트 속성 :
+        // 사용자가 요소에 정보를 입력하거나 요소의 값이 변경되면 실행되는 속성.
+        $input.oninput = debounce(e=>{
+            $msg.textContent = e.target.value;
+        }, 300);
+    </script>
+</body>
+</html>

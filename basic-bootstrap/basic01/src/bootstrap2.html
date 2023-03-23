@@ -1,0 +1,124 @@
+<!-- 참고: https://getbootstrap.com/docs/5.2/components/alerts/ 등 -->
+<!-- Bootstrap 문서의 Component에는 자주 사용하는 UI를 정리해 바로 가져다쓸 수 있도록 함 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">  
+  </head>
+  <body>
+    <!-- alert 예시 -->
+    <div class="alert alert-warning" role="alert">
+      A simple warning alert—check it out!
+    </div>
+
+    <!-- live alert -->
+    <div id="liveAlertPlaceholder"></div>
+    <button button type="button" class="btn btn-primary" id="liveAlertBtn">Show live alert</button>
+
+    <!-- badges 예시 -->
+    <button type="button" class="btn btn-primary">
+      Notifications <span class="badge text-bg-secondary">4</span>
+    </button>
+
+    <button type="button" class="btn btn-primary position-relative">
+      Inbox
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        99+
+        <span class="visually-hidden">unread messages</span>
+      </span>
+    </button>
+
+    <!-- buttons, button group 예시 -->
+    <div>
+      <a class="btn btn-primary" href="#" role="button">Link</a>
+      <button type="button" class="btn btn-primary" disabled>Primary button</button>
+      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+        <label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
+      
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio2">Radio 2</label>
+      
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+        <label class="btn btn-outline-primary" for="btnradio3">Radio 3</label>
+      </div>
+    </div>
+
+    <!-- card 예시 -->
+    <div class="card text-center">
+      <div class="card-header">
+        Featured
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+      <div class="card-footer text-muted">
+        2 days ago
+      </div>
+    </div>
+
+    <!-- carousel 예시 -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="..." alt="First slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="..." alt="Second slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block w-100" src="..." alt="Third slide">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+    <!-- =========================== script 영역 =========================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    
+    <!-- live alert - 자바스크립트 코드 -->
+    <script>
+      const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+
+      const alert = (message, type) => {
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+          `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+          `   <div>${message}</div>`,
+          '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+          '</div>'
+        ].join('')
+
+        alertPlaceholder.append(wrapper)
+      }
+
+      const alertTrigger = document.getElementById('liveAlertBtn')
+      if (alertTrigger) {
+        alertTrigger.addEventListener('click', () => {
+          alert('Nice, you triggered this alert message!', 'success')
+        });
+      }
+    </script>
+
+    <script>
+
+    </script>
+  </body>
+</html>

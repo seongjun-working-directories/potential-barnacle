@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "rbbit.typescript-hero",
+    "xabikos.javascriptsnippets",
+    "chakrounanas.turbo-console-log",
+    "oderwat.indent-rainbow",
+    "2gua.rainbow-brackets",
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    "abdelaziz18003.quasar-snippets",
+    "folke.vscode-monorepo-workspace"
+  ],
+  "unwantedRecommendations": []
+}

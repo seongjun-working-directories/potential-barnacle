@@ -1,0 +1,79 @@
+// 임시 srv : mongodb+srv://admin:qoSxhhLUpPHBSeAj@cluster0.gt8iz9t.mongodb.net/test
+
+> db
+< test
+
+// db에 blog라는 db가 없더라도, 데이터가 들어가는 순간 자동 생성됨
+> use blog
+< 'switched to db blog'
+
+> db.users.insertOne({name:'kevin', email:'kevin@something.com'})
+< { acknowledged: true,
+  insertedId: ObjectId("62f9e0ec2ebd14db5cd0b5ae") }
+
+// _id는 mongodb가 식별하기 위해 자동 생성하는 식별자
+> db.users.find()
+< { _id: ObjectId("62f9e0ec2ebd14db5cd0b5ae"),
+  name: 'kevin',
+  email: 'kevin@something.com' }
+
+// schemaless -- name에 string 타입뿐 아니라 object 타입도 넣을 수 있음
+> db.users.insertOne({name:{firstname:'heungmin', lastname:'son'}, email:'sonny@something.com'})
+< { acknowledged: true,
+  insertedId: ObjectId("62f9e1b62ebd14db5cd0b5af") }
+
+> db.users.find()
+< { _id: ObjectId("62f9e0ec2ebd14db5cd0b5ae"),
+  name: 'kevin',
+  email: 'kevin@something.com' }
+{ _id: ObjectId("62f9e1b62ebd14db5cd0b5af"),
+  name: { firstname: 'heungmin', lastname: 'son' },
+  email: 'sonny@something.com' }
+
+// updateOne({어떤 users를 수정할 것인가}, {어떤 값을 무엇으로 설정할 것인가})
+> db.users.updateOne({ name: 'kevin' }, { $set: {age:30} })
+< { acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0 }
+
+> db.users.find({name: 'kevin'})
+< { _id: ObjectId("62f9e0ec2ebd14db5cd0b5ae"),
+  name: 'kevin',
+  email: 'kevin@something.com',
+  age: 30 }
+
+// object 타입 내의 속성값으로 찾기
+> db.users.findOne({'name.firstname': 'heungmin'})
+< { _id: ObjectId("62f9e1b62ebd14db5cd0b5af"),
+  name: { firstname: 'heungmin', lastname: 'son' },
+  email: 'sonny@something.com' }
+
+> db.users.updateOne({'name.firstname':'heungmin'}, {$set: {'name.lastname': 'heung-min'}})
+< { acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0 }
+
+> db.users.findOne({'_id': ObjectId('62f9e0ec2ebd14db5cd0b5ae')})
+< { _id: ObjectId("62f9e0ec2ebd14db5cd0b5ae"),
+  name: 'kevin',
+  email: 'kevin@something.com',
+  age: 30 }
+
+> db.users.updateOne({'_id': ObjectId('62f9e0ec2ebd14db5cd0b5ae')}, {$inc: {age:1}})
+< { acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0 }
+
+> db.users.deleteOne({'_id': ObjectId('62f9e0ec2ebd14db5cd0b5ae')})
+< { acknowledged: true, deletedCount: 1 }
+
+> db.users.find()
+< { _id: ObjectId("62f9e1b62ebd14db5cd0b5af"),
+  name: { firstname: 'heungmin', lastname: 'heung-min' },
+  email: 'sonny@something.com' }

@@ -1,0 +1,9 @@
+1.
+npm init -y
+npm install puppeteer dotenv
+
+2.
+
+3.
+
+4.

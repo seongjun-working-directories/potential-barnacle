@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<body>
+    <pre></pre>
+    <script>
+        const xhr = new XMLHttpRequest();
+
+        // HTTP 요청 초기화
+        // todos 리소스에서 id로 todo를 특정해
+        // id를 제외한 리소스 전체를 교체
+        xhr.open('PUT', '/todos/4');
+
+        xhr.setRequestHeader('content-type', 'application/json');
+
+        xhr.send(JSON.stringify({
+            id:4, content:'React', completed:true
+        }));
+
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                document.querySelector('pre')
+                .textContent = xhr.response;
+            }
+            else {
+                console.error('Error', xhr.status, xhr.statusText);
+            }
+        };
+    </script>
+</body>
+</html>

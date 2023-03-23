@@ -1,0 +1,21 @@
+1. Fastify Documentation
+https://www.fastify.io/docs/latest/
+
+2. Nodemon & Fastify CLI Installation
+https://github.com/fastify/fastify-cli
+>> npm install -g nodemon
+>> npm install -g fastify-cli
+
+3. Usage of Fastify CLI
+>> npx fastify-cli generate tmpFastify --lang=ts
+
+4. Fastify Ecosystem
+https://www.fastify.io/ecosystem/
+
+5. [ fastify-cli 활용 ]
+>> cd ..    // legacy 폴더에서 아래 명령어 입력
+>> npx fastify-cli generate-plugin demo
+>> cd demo
+>> npm install
+
+6. Extended Server => Plugin

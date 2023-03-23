@@ -1,0 +1,8 @@
+[ commands ]
+>> npm init -y
+>> npm install fastify @fastify/swagger uuid
+>> npm install --save-dev nodemon
+>> 
+
+[ VSC Extensions ]
+REST Client by Huachao Mao

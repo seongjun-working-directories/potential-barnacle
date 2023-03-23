@@ -1,0 +1,60 @@
+{
+  "fori": {
+    "prefix": "fori",
+    "body": [
+      "for (let i = 0, lenI = array.length; i < lenI; i++) {",
+      "  const el = array[i]",
+      "}"
+    ],
+    "description": ""
+  },
+  "forj": {
+    "prefix": "forj",
+    "body": [
+      "for (let j = 0, lenJ = array.length; j < lenJ; j++) {",
+      "  const el = array[j];",
+      "}"
+    ],
+    "description": ""
+  },
+  "fork": {
+    "prefix": "fork",
+    "body": [
+      "for (let k = 0, lenK = array.length; k < lenK; k++) {",
+      "  const el = array[k];",
+      "}"
+    ],
+    "description": ""
+  },
+  "tryfinally": {
+    "prefix": "tryfinally",
+    "body": [
+      "try {",
+      "",
+      "} finally {",
+      "",
+      "}"
+    ],
+    "description": "tryfinally"
+  },
+  "clq": {
+    "prefix": "clq",
+    "body": [
+      "console.log('🚀 -------------------------------------------------------------------------------------');",
+      "console.log('🚀 ~ 🎁🎁🎁  E N D XXXXX 🎁🎁🎁');",
+      "console.log('🚀 ~ 🚄🚄🚄 START XXXXX 🚄🚄🚄');",
+      "console.log('🚀 -------------------------------------------------------------------------------------');"
+    ],
+    "description": "clq"
+  },
+  "cmt": {
+    "prefix": "cmt",
+    "body": [
+      "// 🚀 -------------------------------------------------------------------------------------",
+      "// 🚀 ~ 🚄🚄🚄 START XXXXX 🚄🚄🚄",
+      "// 🚀 ~ 🎁🎁🎁  E N D XXXXX 🎁🎁🎁",
+      "// 🚀 -------------------------------------------------------------------------------------"
+    ],
+    "description": "cmt"
+  }
+}

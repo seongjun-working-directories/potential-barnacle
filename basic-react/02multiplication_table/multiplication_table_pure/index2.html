@@ -1,0 +1,88 @@
+<!-- Using React Hooks -->
+<!-- 주의사항: React에서는 HTML의 class 속성을 className으로 사용해야 함 -->
+<!-- 주의사항: React에서 HTML의 for 속성을 labelFor로 사용해야 함 -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Multiplication Table</title>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            // OLD : class MultiTable extends React.Component
+            // NEW --> React Hooks : 함수 컴포넌트에서도 state와 ref를 쓸 수 있도록 함
+            // (*주의: state가 변하면, MultiTable 함수가 통째로 다시 실행됨)
+            const MultiTable = ()=>{
+
+                // OLD : constructor(props) { super(props); this.state={...}; }
+                // New : state(상태) 초기값 설정
+                const [firstNum, setFirstNum] = React.useState(Math.ceil(Math.random()*19));
+                const [secondNum, setSecondNum] = React.useState(Math.ceil(Math.random()*19));
+                const [value, setValue] = React.useState('');
+                const [result, setResult] = React.useState('');
+
+                // ref의 달라진 사용방법
+                const inputRef = React.useRef(null);
+
+                const onChangeInput = (e)=>{
+                    // setValue는 value라는 상태(state)를 Setting할 때 사용
+                    setValue(e.target.value);
+                }
+
+                const onSubmitForm = (e)=>{
+                    e.preventDefault();
+                    if (parseInt(value) === firstNum * secondNum) {
+                        setResult(
+                            `Right Answer! `
+                            + `${firstNum} * ${secondNum} = ${value}`
+                        );
+                        setFirstNum(Math.ceil(Math.random()*19));
+                        setSecondNum(Math.ceil(Math.random()*19));
+                        setValue('');
+                        // ref의 달라진 사용 방법
+                        // React Hooks에서는 직접 DOM에 접근하는 것이 아닌 useRef()를 통해 DOM에 접근
+                        inputRef.current.focus();
+                    }
+                    else {
+                        setResult('Try Again');
+                        setValue('');
+                        inputRef.current.focus();
+                    }
+                }
+
+                return (
+                    <React.Fragment>
+                        <div>
+                            {firstNum} * {secondNum} =
+                        </div>
+                        <form onSubmit={onSubmitForm}>
+                            <input ref={inputRef} type='number' value={value}
+                                onChange={onChangeInput} />
+                            <button type='submit'>Enter</button>
+                        </form>
+                        <div>{result}</div>
+                    </React.Fragment>
+                );
+            };
+        </script>
+
+        <script type="text/babel">
+            // 컴포넌트마다 별개로 동작 즉, 두개의 MultiTable은 분리되어 동작
+            ReactDOM.render(<div><MultiTable /><br /><MultiTable /></div>, document.querySelector('#root'));
+        </script>
+    </body>
+</html>
+
+
+<!--
+[[ React Hooks ]]
+React Hooks은 리액트의 새로운 기능으로 React 16.8버전에 새로 추가된 기능으로 state, component에 대한 것들을 바꿔놓았다.
+예를 들면, function component에서 state을 가질 수 있게 된 것이다.
+만일 앱을 react hook을 사용하여 만든다면 class component, render 등을 안해도 된다는 뜻이다.
+모든 것은 하나의 function이 되는 것 함수형 프로그래밍이 가능해지는 것을 뜻한다.
+-->

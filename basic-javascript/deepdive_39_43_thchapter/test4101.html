@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<!--
+버튼을 짧은 시간 간격으로 연속해서 클릭했을 때,
+일반/디바운스/스로틀 이벤트 핸들러의 호출 빈도 비교.
+즉, 일반적인 이벤트 핸들러는 버튼을 빠르게 누르면 누른 만큼 수치가 올라가지만,
+디바운스나 스로틀된 이벤트 핸들러는 누르는 그대로를 반응하지는 않음.
+-->
+<body>
+    <button>click me</button>
+    <pre>일반 클릭 이벤트 카운터   <span class="normal-msg">0</span></pre>
+    <pre>디바운스 클릭 이벤트 카운터   <span class="debounce-msg">0</span></pre>
+    <pre>스로틀 클릭 이벤트 카운터   <span class="throttle-msg">0</span></pre>
+    <script>
+        const $button = document.querySelector('button');
+        const $normalMsg = document.querySelector('.normal-msg');
+        const $debounceMsg = document.querySelector('.debounce-msg');
+        const $throttleMsg = document.querySelector('.throttle-msg');
+
+        const debounce = (callback, delay) => {
+            let timerId;
+            return event => {
+                if(timerId) clearTimeout(timerId);
+                timerId = setTimeout(callback, delay, event);
+            };
+        };
+
+        const throttle = (callback, delay) => {
+            let timerId;
+            return event => {
+                if (timerId) return;
+                timerId = setTimeout(() => {
+                    callback(event);
+                    timerId = null;
+                }, delay, event);
+            };
+        };
+
+        $button.addEventListener('click', () => {
+            $normalMsg.textContent = +$normalMsg.textContent + 1;
+        });
+        $button.addEventListener('click', debounce(()=> {
+            $debounceMsg.textContent = +$debounceMsg.textContent + 1;
+        }, 500));
+        $button.addEventListener('click', throttle(()=> {
+            $throttleMsg.textContent = +$throttleMsg.textContent + 1;
+        }, 500));
+    </script>
+</body>
+</html>

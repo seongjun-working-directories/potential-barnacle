@@ -1,0 +1,16 @@
+>> npm install -g @vue/cli
+>> (root 폴더명 : vue-project-mini-shop)
+>> vue create vue-project-mini-shop
+>> (생성된 vue 프로젝트명을 client로 변경하고 server 폴더를 같은 계층에 생성)
+>> cd client
+>> vue add router
+>> npm install axios
+>> npm install vuex@next --save
+>> npm install vue-sweetalert2
+>> npm install --save vuex-persistedstate
+
+>> cd ..
+>> (root 위치에서 다음의 명령어들을 실행)
+>> cd server
+>> npm init -y
+>> npm install express express-session mysql

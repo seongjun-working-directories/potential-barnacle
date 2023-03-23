@@ -1,0 +1,17 @@
+1.
+CSV 파일은 "콤마(,)와 줄바꿈(\n)으로 구분된 값들"을 의미함.
+2차원 데이터를 다루기에 용이.
+
+ex)
+[영화제목, 링크]
+언차티드, https://movie.naver.com/movie/bi/mi/basic.naver?code=80737
+킹메이커, https://movie.naver.com/movie/bi/mi/basic.naver?code=177366
+해적: 도깨비 깃발, https://movie.naver.com/movie/bi/mi/basic.naver?code=194204
+
+2.
+CSV 파싱이란, 자바스크립트에서 사용할 수 있도록 CSV 데이터를 가공하는 것.
+
+3.
+npm install csv-parse
+
+4.

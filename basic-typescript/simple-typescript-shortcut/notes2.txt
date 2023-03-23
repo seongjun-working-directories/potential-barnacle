@@ -1,0 +1,268 @@
+11. let과 const의 타입 추론
+'''
+let a = 'Mark'; // string
+const b = 'Mark'; // 'Mark' => literal type
+
+let c = 38; // number
+const d = 38; // 38 => literal type
+
+let e = false; // boolean
+const f = false; // false => literal type
+
+let g = ['Mark', 'Haeun']; // string[]
+const h = ['Mark', 'Haeun']; // string[]
+
+const i = ['Mark', 'Haeun', 'Bokdang'] as const; // readonly ["Mark", "Haeun", "Bokdang"]
+'''
+
+12. Best common type : 가장 공통적인 타입을 추론해냄
+'''
+let j = [0, 1, null]; // (number | null)[]
+const k = [0, 1, null]; // (number | null)[]
+
+class Animal {}
+class Rhino extends Animal {}
+class Elephant extends Animal {}
+class Snake extends Animal {}
+
+let l = [new Rhino(), new Elephant(), new Snake()]; // (Rhino | Elephant | Snake)[]
+const m = [new Rhino(), new Elephant(), new Snake()]; // (Rhino | Elephant | Snake)[]
+// m 변수와 같은 상황에서, Animal[]을 의도한 것이라면, 명시해주는 것이 합리적인 방법
+
+const n = [new Animal(), new Rhino(), new Elephant(), new Snake()]; // Animal[]
+const o: Animal[] = [new Rhino(), new Elephant(), new Snake()]; // Animal[]
+'''
+
+
+13. Contextual Typing - 위치에 따라 추론이 다름
+'''
+// Parameter 'e' implicitly has an 'any' type.
+const click = (e) => {
+  e; // any
+};
+
+document.addEventListener('click', click);
+document.addEventListener('click', (e) => {
+  e; // MouseEvent
+});
+'''
+
+
+14. `typeof` Type Guard - 보통 Primitive 타입일 경우
+function getNumber(value: number | string): number {    // 원시 타입에서 자주 사용하는 타입 가드 패턴
+  value; // number | string
+  if (typeof value === 'number') {
+    value; // number
+	return value;
+  }
+  value; // string
+  return -1;
+}
+
+
+15. `instanceof` Type Guard
+interface IMachine {
+  name: string;
+}
+
+class Car implements IMachine {
+  name: string;
+  wheel: number;
+}
+
+class Boat implements IMachine {
+  name: string;
+  motor: number;
+}
+
+function getWhellOrMotor(machine: Car | Boat): number {
+  if (machine instanceof Car) {
+    return machine.wheel; // Car
+  } else {
+    return machine.motor; // Boat
+  }
+}
+
+
+16. `instanceof` Type Guard - Error 객체 구분에 많이 사용됨
+'''
+class NegativeNumberError extends Error {}
+
+function getNumber(value: number): number | NegativeNumberError {
+  if (value < 0) return new NegativeNumberError();
+  return value;
+}
+
+function main() {
+  const num = getNumber(-10);
+  if (num instanceof NegativeNumberError) { // 타입 가드 by `instanceof`
+    return;
+  }
+  num; // number
+}
+'''
+
+
+17. `in` operator Type Guard - object의 프로퍼티 유무로 처리하는 경우
+'''
+interface Admin {
+  id: string;
+  role: string:
+}
+
+interface User {
+  id: string;
+  email: string;
+}
+
+function redirect(user: Admin | User) {
+  if("role" in user) {
+    routeToAdminPage(user.role);
+  } else {
+    routeToHomePage(user.email);
+  }
+}
+'''
+
+
+18. `literal` Type Guard - object의 프로퍼티가 같고, 타입이 다른 경우
+'''
+interface IMachine {
+  type: string;
+}
+
+class Car implements IMachine {
+  type: 'CAR';
+  wheel: number;
+}
+
+class Boat implements IMachine {
+  type: 'BOAT';
+  motor: number;
+}
+
+function getWhellOrMotor(machine: Car | Boat): number {
+  if (machine.type === 'CAR') {
+    return machine.wheel;
+  } else {
+    return machine.motor;
+  }
+}
+'''
+
+
+19. custom Type Guard - 사용자 지정 타입 가드
+'''
+function getWhellOrMotor(machine: any): number {
+  if (isCar(machine)) {
+    return machine.wheel;
+  } else if (isBoat(machine)) {
+    return machine.motor;
+  } else {
+    return -1;
+  }
+}
+
+function isCar(arg: any): arg is Car {
+    return arg.type === 'CAR';
+}
+
+function isBoat(arg: any): arg is Boat {
+    return arg.type === 'BOAT';
+}
+'''
+
+
+20. Class를 안전하게 만들기
+-- Class Property 의 타입을 명시적으로 지정해야 한다.
+'''
+class Square1 {
+  area; // error! implicit any
+  sideLength; // error! implicit any
+}
+'''
+
+-- Class Property의 타입을 명시적으로 지정해도, 다음과 같이 값이 대입되지 않으면 undefined를 반환해버림
+'''
+class Square2 {
+  area: number;
+  sideLength: number;
+}
+
+const square2 = new Square2();
+console.log(square2.area); // compile time - number, runtime - undefined
+console.log(square2.sideLength); // compile time - number, runtime - undefined
+'''
+
+-- 이를 예방하기 위해 타입스크립트는, `strictPropertyInitialization` 옵션을 제공
+-- Class Property 가 초기화되지 않음
+'''
+class Square2 {
+  area: number; // error TS2564: Property 'area' has no initializer and is not definitely assigned in the constructor.
+  sideLength: number; // error TS2564: Property 'sideLength' has no initializer and is not definitely assigned in the constructor.
+} // 사용자는 시도조차 할 수 없도록 만듭니다.
+
+const square2 = new Square2();
+console.log(square2.area);
+console.log(square2.sideLength);
+'''
+
+-- 베스트는 사용자가 Class Porperty를 선언에서 초기화하는 것
+'''
+class Square3 {
+    area: number = 0;
+    sideLength: number = 0;
+}
+'''
+
+-- 또는 사용자가 Class Property를 생성자에서 초기화하는 것
+'''
+class Square4 {
+  area: number;
+  sideLength: number;
+
+  constructor(sideLength: number) {
+    this.sideLength = sideLength;
+    this.area = sideLength ** 2;
+  }
+}
+'''
+
+
+21. Class Property 의 타입 추론
+'''
+class Square6 {
+  sideLength;
+
+  constructor(sideLength: number) {
+    if (Math.random()) {
+      this.sideLength = sideLength; // 생성자에서 프로퍼티의 타입을 추론하는 기능이 추가됨
+    }
+  }
+
+  get area() {
+    return this.sideLength ** 2; // error! Object is possibly 'undefined'.
+  }
+}
+'''
+
+
+22. 그럼에도 여전히 생성자를 벗어나면 추론되지 않는다.
+'''
+class Square7 {
+  sideLength!: number; // ! 로 의도를 표현해야 한다.
+  // 생성자에서 초기화하지 않지만, 그 뒤로 어딘가에서 타입이 표시됨을 알리는 기능
+
+  constructor(sideLength: number) {
+    this.initialize(sideLength);
+  }
+
+  initialize(sideLength: number) {
+    this.sideLength = sideLength;
+  }
+
+  get area() {
+    return this.sideLength ** 2;
+  }
+}
+'''

@@ -1,0 +1,23 @@
+TypeDoc 사용법
+
+0.
+>> npm install --save-dev typescript
+>> npx tsc --init
+>> npm install --save-dev typedoc
+>> npx typedoc --version
+
+1.
+tsconfig.json의 옵션
+{
+  "compilerOptions": {
+    "normalTypeScriptOptions": "here"
+  },
+  "typedocOptions": {
+    "entryPoints": ["src/index.ts"],
+    "out": "docs"
+  }
+}
+
+2.
+typedoc  생성
+>> npx typedoc --out docs

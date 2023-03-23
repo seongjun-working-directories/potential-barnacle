@@ -1,0 +1,11 @@
+*** 주의사항 ***
+10games는 여지껏 만든 게임들을 하나의 페이지에서 사용할 수 있도록 함
+다만, 이전 게임들은 각각의 디렉토리에서 각각의 node_modules를 import 해서 사용했기 때문에,
+const React = require('react');의 각각의 경로가 다 다른데, 이러한 원인으로 실행이 불가함.
+해결 방법은 모든 게임들의 최상위 디렉토리인 hmsj_react_basic에 npm init -y를 한 뒤,
+해당 디렉토리 하나만 node_modules를 갖고, 나머지 게임들이 그 패키지를 import 하는 방법을 사용해야 함.
+그러나, 해당 작업은 들어가는 비용이 이를 통해 얻는 이득보다 많고 해당 프로젝트는 학습용이기 때문에
+일단 코드를 작성했고 위의 상황이 이뤄졌다고 가정하고 코드를 읽어나가기 바람.
+
+npm install react-router --> 뼈대
+npm install react-router-dom --> 웹 전용]

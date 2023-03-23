@@ -1,0 +1,62 @@
+<!-- 시작하기 전에 Chrome에 React 확장 프로그램 설치를 권장 -->
+<!doctype html>
+<html>
+    <head>
+        <!-- 실제 개발할 때는 development를 production으로 바꿔야 함 -->
+        <script crossorigin src="https://unpkg.com.react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com.react-dom@16/umd/react-dom.development.js"></script>
+    </head>
+    <body>
+        <!-- React는 아래의 컴포넌트를 렌더링할 root가 필요 -->
+        <div id="root"></div>
+        <script>
+            // createElement는 html 태그를 만듦
+            const e = React.createElement;
+
+            // 컴포넌트
+            class LikeButton extends React.Component {
+                constructor(props) {
+                    super(props);
+                    // 상태(state) : `바뀔 여지가 있는 부분`
+                    this.state = {
+                        liked: false,
+                    };
+                }
+
+                // 해당 클래스를 어떻게 화면에 표시할 지 결정
+                render() {
+                    // 첫 번째 인자: 태그 명을 입력
+                    // 두 번째 인자: 속성을 객체 형식으로 정의
+                    // 세 번째 인자: 여는 태그와 닫는 태그 사이의 텍스트
+                    return e(
+                        'button',
+                        {
+                            // setState는 상태를 설정할 때 쓰는 함수
+                            onClick: ()=>{ this.setState({liked: true}) },
+                            type: 'submit'
+                        },
+                        this.state.liked === true ? 'Liked':'Like'
+                    );
+
+                    /*
+                    다음의 html 태그와 같음
+                    <button>Like</button>
+                    */
+                }
+            }
+        </script>
+        <script>
+            // ReactDOM은 React로 어떻게 만들겠다고 선언한 것을
+            // 실제로 구현(rendering)한다고 볼 수 있음
+            // 두 번째 인자는 어디에 넣을지를 결정하는 요소
+            ReactDOM.render(e(LikeButton), document.querySelector('#root'));
+            
+            /*
+            위의 코드는 다음을 만듦
+            <div id='root'>
+                <button onclick='버튼 클릭시 실행할 코드' type='submit'>Like</button>
+            </div>
+            */
+        </script>
+    </body>
+</html>

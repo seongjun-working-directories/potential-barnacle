@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Word Chain</title>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script src="./dist/app.js"></script>
+    </body>
+</html>
+
+<!--
+매번 npx webpack 명령어로 변경을 수동으로 반영하는 것은 비효율적
+따라서 다음의 세팅으로 자동으로 변경 사항이 발생할 경우 npx webpack을 실행하도록 해야 함
+`npm install --save-dev react-refresh @pmmmwh/react-refresh-webpack-plugin`
+`npm install --save-dev webpack-dev-server`
+
+이후 package.json의 scripts에 `"dev": "webpack serve --env development"`를 입력 
+그리고 webpack.config.js 파일에서 다음의 내용을 입력
+const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+또한, plugins에 다음의 코드를 입력
+plugins: [
+    new RefreshWebpackPlugin(),
+],
+
+dev-server 설정은 다음과 같이 진행
+webpack.config.js의 output 속성 아래쪽에 다음의 코드 입력
+devServer: {
+    devMiddleware: {publicPath: '/dist'},
+    static: {directory: path.resolve(__dirname)},
+    hot: true
+},
+
+이제 터미널에 npm run dev를 입력
+그러면 npx webpack에 따른 app.js 생성 없이도 실제 결과가 어떨지 변경사항을 반영하며 확인 가능
+-->

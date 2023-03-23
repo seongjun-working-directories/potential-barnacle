@@ -1,0 +1,19 @@
+{
+  "name": "youtubecrawling",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "keywords": [],
+  "author": "Park",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "puppeteer": "^13.5.0",
+    "puppeteer-extra": "^3.2.3",
+    "puppeteer-extra-plugin-stealth": "^2.9.0",
+    "ytdl-core": "^4.11.0"
+  }
+}

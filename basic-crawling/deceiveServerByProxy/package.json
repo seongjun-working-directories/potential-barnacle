@@ -1,0 +1,20 @@
+{
+  "name": "deceiveserverbyproxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "keywords": [],
+  "author": "Park",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "puppeteer": "^13.4.0",
+    "puppeteer-page-proxy": "^1.2.8",
+    "sequelize": "^6.17.0"
+  }
+}

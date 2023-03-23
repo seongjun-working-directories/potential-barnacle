@@ -1,0 +1,50 @@
+1.
+서버는 주로 IP 기반으로 차단을 많이 함.
+따라서, IP 기반 차단 방법을 우회하는 방법을 다룸.
+또한 데이터베이스에 결과를 저장하는 방식을 다룸.
+
+2.
+Free Proxy List - 한국에서 사용 가능한 목록.
+https://spys.one/free-proxy-list/KR/
+프록시는 다른 사람의 아이피로 요청을 보낼 수 있는 기능.
+다만, 프록시는 항상 켜있는게 아니고 새롭게 생기거나 사라지거나 함.
+따라서, 속도가 가장 빠른 프록시를 크롤링해 해당 프록시로 서버에 접속해야 함.
+
+3.
+Anonymity가 NOA인 것은 자신이 누구인지 들킬 수 있기 때문에,
+보다 높은 가능성으로 익명성을 보장받고자 한다면, HIA를 사용해야 함.
+
+4.
+프록시를 사용해 서버에 요청하기 위해서는,
+위의 사이트에서 Proxy address:port 목록을 우선 크롤링해야 함.
+
+5.
+네이버에서 내 아이피를 검색하면, 현재 사용 중인 ip 주소가 나옴.
+ex) 14.36.58.132
+
+6.
+데이터베이스 연동은 Sequelize와 Mysql을 통해 진행함.
+https://any-ting.tistory.com/49
+https://velog.io/@kimkevin90/%EC%8B%9C%ED%80%84%EB%9D%BC%EC%9D%B4%EC%A6%88Sequelize-%EA%B8%B0%EB%B3%B8-%EC%82%AC%EC%9A%A9%EB%B2%95
+https://hoon93.tistory.com/9
+
+7.
+npm i puppeteer express morgan sequelize mysql2
+npm i --g sequelize-cli
+
+8.
+[DB 연동 방법] by sequelize & mysql
+(1) Mysql에서 프록시를 저장할 Schema를 만듦.
+-> 작업관리자 > 서비스 > MySQL80에 오른쪽 버튼을 누른 뒤 시작 클릭.
+-> cmd창에서 다음과 같이 입력해야 함.
+-> cd C:\Program Files\MySQL\MySQL Server 8.0\bin   // Mysql 서버 디렉토리로 이동.
+-> mysql -u root -p   // Mysql 구동.
+-> CREATE SCHEMA `스키마 이름`; ex) create schema crawling_practice;
+(2) 이후 Table 부터는 javascript로 제작 가능.
+(3) Terminal에 `sequelize init` 입력 시 config, models, seeders 디렉토리가 생성됨.
+(4) 우선 config/config.json 파일에서 데이터베이스명과 암호를 수정.
+(5) 그리고, models/index.js 파일을 수정.
+(6) models 폴더에 자신이 만들 테이블을 세팅함.
+(7) 이후부터는 코드 참조.
+
+9.

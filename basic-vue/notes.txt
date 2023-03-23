@@ -1,0 +1,450 @@
+0.
+>> npm install -g @vue/cli
+>> vue create [프로젝트명]
+>> cd [프로젝트명]
+>> npm run serve
+
+
+1.
+>> vue create [프로젝트명]
+>> (Manually Select Features를 선택)
+>> (Babel, Vuex, Linter/Formatter 선택)
+>> (3.X 선택)
+>> (ESLint + Standard config 선택)
+>> (Lint on save 선택)
+>> (In package.json 선택)
+>> cd [프로젝트명]
+>> npm run serve
+
+
+2.
+라우팅 : 사용자가 접속한 주소에 따라 페이지(컴포넌트)가 달라지는 것
+=> 즉, 클라이언트에서 url 주소에 따라 페이지가 전환되는 것
+// vue-router 설치 : src 폴더에 router, views 폴더가 생성됨
+>> vue add router
+
+
+3.
+컴포넌트(Component) : .vue로 작성된 파일
+
+
+4.
+컴포넌트(Component)란? View, Data, Code의 세트
+컴포넌트(Component)의 특징 : 재사용 가능 by import
+=> 컴포넌트는 페이지 자체일 수도 있고, 페이지 내의 특정 기능 요소일 수도 있음
+
+
+5.
+실제 프로젝트에서는 views 폴더에 우리가 페이지라 부르는 화면 하나하나에
+해당하는 Vue 컴포넌트 파일을 생성하고,
+components 폴더에는 다른 Vue 파일에서 호출해서 공통으로 사용할 수 있는
+Vue 컴포넌트 파일을 생성하고 관리하게 됨
+
+
+6.
+snippet
+=> 특정 코드를 미리 작성하고 등록하여 단축키로 코드를 불러와 바로 사용할 수 있는 기능
+=> vue 컴포넌트의 기본 구조를 작성하고, 해당 코드를 snippet에 등록하는 것을 권장
+
+
+7.
+Vue Component의 기본 구조
+Vue Component 내에는 name, components, data, computed와 같은 기본 프로퍼티 외에도
+뷰 컴포넌트가 생성되고 종료되기까지 발생하는 라이프사이클 훅에 해당하는 메서드 등이 존재
+
+
+8.
+snippet에 등록할 기본 컴포넌트 구조
+'''
+<template>
+    <div></div>
+</template>
+<script>
+    export default {
+        name: '',       // 컴포넌트명
+        components: {}, // 다른 컴포넌트 사용 시 컴포넌트를 import 하고 배열로 저장
+        data() {        // html과 js 코드에서 사용할 데이터 변수 선언
+            return {
+                sampleData: ''
+            }
+        },
+        setup() {},     // 컴포지션 API
+        created() {},   // 컴포넌트가 생성되면 실행
+        mounted() {},   // template에 정의된 html 코드가 렌더링된 후 실행
+        unmounted() {}, // unmount가 완료된 후 실행
+        methods: {}     // 컴포넌트 내에서 사용할 메서드 정의
+    }
+</script>
+'''
+
+
+9.
+snippet 설정 방법
+(1)File -> Preferences -> Configure User Snippets -> vue를 입력 -> Vue.json 파일이 열림
+(2)앞서 작성된 양식을 vue.json의 body 속성에 넣음
+(3)이때, 코드를 문자열로 등록하므로, 코드 포맷을 맞추기 위해 \n, \t를 사용해야 함
+(4)그 뒤, prefix에 사용한 문자열을 .vue 파일에서 입력하면 해당 양식을 불러옴
+'''
+// vue.json
+{
+	"Generate Basic Vue Code": {
+		"prefix": "vue-start",
+		"body": [
+			"<template>\n\t<div></div>\n</template>\n<script>",
+			"\texport default {\n\t\tname: '',       // 컴포넌트명",
+			"\t\tcomponents: {}, // 다른 컴포넌트 사용 시 컴포넌트를 import 하고 배열로 저장",
+			"\t\tdata() {        // html과 js 코드에서 사용할 데이터 변수 선언",
+			"\t\t\treturn {\n\t\t\t\tsampleData: ''\n\t\t\t}\n\t\t},",
+			"\t\tsetup() {},     // 컴포지션 API",
+			"\t\tcreated() {},   // 컴포넌트가 생성되면 실행",
+			"\t\tmounted() {},   // template에 정의된 html 코드가 렌더링된 후 실행",
+			"\t\tunmounted() {}, // unmount가 완료된 후 실행",
+			"\t\tmethods: {}     // 컴포넌트 내에서 사용할 메서드 정의\n\t}\n</script>"
+		],
+		"description": "Basic Component Template"
+	}
+}
+'''
+
+
+10.
+Lifecycle Hooks
+// https://v3.ko.vuejs.org/api/options-lifecycle-hooks.html#beforecreate
+=> 모든 컴포넌트는 생성될 때 초기화 단계를 거침
+beforeCreate    인스턴스가 초기화 된 직후, 데이터 관찰 및 이벤트/감시자(watcher) 설정 전에 동기적으로 호출
+created         인스턴스가 생성된 후 동기적으로 호출
+beforeMount     마운트가 시작되기 직전에 호출
+mounted         인스턴스가 마운트된 후 호출되며, 여기서 Vue.createApp({}).mount()로 전달된 엘리먼트는 새로 생성된 vm.$el로 대체
+beforeUpdate    DOM이 패치되기 전에 데이터가 변경될 때 호출
+updated         데이터가 변경되어 가상 DOM이 다시 렌더링되고 패치된 후에 호출
+activated       keep-alive 컴포넌트가 활성화될 때 호출
+deactivated     keep-alive 컴포넌트가 비활성화될 때 호출
+beforeUnmount   컴포넌트 인스턴스가 마운트 해제(unmounted) 되기 직전에 호출
+unmounted       컴포넌트 인스턴스가 마운트 해제(unmounted)된 후 호출
+errorCaptured   자손 컴포넌트의 에러가 포착(capture)될 때 호출
+renderTracked   가상 DOM의 재렌더링이 추적될 때 호출
+renderTriggered 가상 돔의 재렌더링이 트리거 될 때 호출
+
+
+11.
+Lifecycle Hooks Tip!
+(1) created()에는 화면에서 제일 먼저 보여줘야 하는 데이터 영역을 등록
+(2) mounted()에는 화면 로딩 이후 삽입되어도 되는 데이터 혹은 html 객체 부분을 정의
+
+
+12.
+Vue는 양방향 데이터 바인딩(Two-way data binding)을 지원
+=> 모델(model)에서 데이터를 정의한 후 뷰(view)와 연결하면
+=> 모델과 뷰 중 어느 한쪽에서 변경이 일어났을 때 다른 한쪽에 자동으로 반영됨을 의미
+
+
+13.
+Vue 컴포넌트에서 데이터를 바인딩하는 방법은 바인딩 유형에 따라 적용하는 방식에 차이가 존재
+(1) 데이터가 html tag 안에 텍스트로 바인딩되는 경우
+(2) 데이터가 html tag의 속성(attribute)으로 바인딩되는 경우
+(3) 데이터가 html의 Form Element의 value에 바인딩되는 경우
+(4) 다중 데이터가 html의 다중 Element를 생성하기 위해 바인딩 되는 경우
+
+
+14.
+문자열 데이터 바인딩의 경우 이중 중괄호({{}})를 사용해 데이터를 바인딩함
+
+
+15.
+raw(원시) HTML 데이터 바인딩의 경우, v-html 디렉티브를 이용해 바인딩함
+참고로 Vue에서 사용하는 디렉티브는 'v-' 접두사를 사용
+ex) <div v-html='htmlString'></div>
+
+
+16.
+Form 입력 데이터 바인딩의 경우, v-model 디렉티브를 사용해 양방향 데이터 바인딩 생성 가능
+Form Element란, 웹 페이지에서 사용자로부터 데이터를 입력받을 수 있는 필드를 의미
+
+주의할 점은, v-model의 경우, 내부적으로 서로 다른 속성을 사용하고
+서로 다른 입력 요소에 대해 서로 다른 이벤트를 전송한다는 것
+
+
+17.
+input type=text의 경우 입력받은 텍스트는 v-model을 사용해 value 속성에 저장함
+input type=number의 경우, 입력받은 숫자는 v-model.number를 통해 숫자로 관리함
+select의 경우, type=text와 동일하게 v-model은 내부적으로 select의 value 속성을 사용해 양방향 데이터 바인딩함
+textarea의 경우 <textarea v-model="message"></textarea>로 사용해야 함
+
+
+18.
+체크박스의 경우, input type=text, select와 다르게, v-model은 내부적으로 체크박스의 checked 속성을 사용
+따라서 value 속성에 데이터 바인딩을 하고자 할 경우, v-bind:value를 사용해야 함
+
+
+19.
+라디오 역시 체크박스와 마찬가지로, v-model은 내부적으로 checked 속성과 바인딩이 이뤄짐
+따라서 value 속성에 데이터 바인딩을 하고자 할 경우, v-bind:value를 사용해야 함
+
+
+20.
+속성(attribute)
+value를 제외한 HTML 객체의 속성에 데이터를 바인딩하려면, `v-bind: 디렉티브`를 사용해야 함
+v-bind는 생략하고 :(콜론)으로 사용할 수 있음
+
+
+21.
+computed와 watch 모두 vue 인스턴스 내의
+정의된 데이터 값이 변경되는지 감시하고, 변경될 때마다 정의된 함수가 실행됨
+그러나, computed와 watch는 사용되는 용도에 차이가 있음
+(1) computed
+계산된 값을 출력하기 위한 용도
+=> 일반 함수와 달리 지정된 값이 달라질 경우 return한 반환값을 바로 업데이트함
+=> ex) fullname() {return this.firstname + " " + this.lastname;}
+이미 정의된 계산식에 따라 결과값을 반환할 때 사용
+(2) watch
+특정 대상을 감시하여, 지정한 대상의 값이 변경될 때마다 정의한 함수를 실행함
+어떤 특정 조건에서 함수를 실행시키기 위한 트리거로 사용
+
+
+22.
+Postman의 Mock(가짜) 서버를 통해 서버 환경이 준비되어 있지 않더라도
+효율적으로 프론트엔드 개발을 진행할 수 있음
+=> 실제처럼 api를 호출해서 데이터를 받아와 Vue에서 사용 가능
+=> 나중에 서버 프로그램이 개발 완료되면,
+=> 데이터 세트에 대한 endpoint를 서버 프로그램 주소로 변경만 하면 됨
+
+
+23.
+Postman 설치
+https://www.postman.com/downloads/?utm_source=postman-home
+
+Mock 서버 생성은 vue-project-mock-server 폴더 내에 있는
+`MockServerSetting.pdf` 파일을 참조
+
+
+24.
+서버 데이터 바인딩
+(1) Mock 서버에 API를 생성하고 테스트 데이터를 등록
+(2) Vue 컴포넌트에서 Mock 서버에 등록한 API를 호출해 서버 데이터를 바인딩
+
+
+25.
+Vue 프로젝트에서는 서버와의 통신을 위해 Axios를 자주 활용함
+일반적으로 API 호출 메서드는 팀의 개발 리더가 작성
+Axios는 서버와 데이터를 송수신할 수 있는 HTTP 비동기 통신 라이브러리
+>> npm install axios --save
+
+
+26.
+Axios가 제공하는 request 메서드
+=> 현재 통신 목적을 명확히 하기 위해 다양한 메서드를 지원
+(1) axios.request
+(2) axios.options
+(3) axios.get		: 조회 목적
+(4) axios.post		: 새 리소스 생성 목적
+(5) axios.delete	: 삭제 목적
+(6) axios.put		: 데이터베이스에 저장되어 있는 내용을 갱신하는 목적
+(7) axios.head
+(8) axios.patch
+
+
+27.
+서버는 클라이언트로부터 요청이 왔을 때,
+get / delete / post / put 등의 요청 유형에 따른 응답 프로그램을 구성할 수 있음
+
+
+28.
+믹스인(Mixins) 파일 생성
+프로젝트를 개발하다 보면, 다수의 컴포넌트에서 공통으로 사용하는 함수를 구현할 필요가 있음
+이때, vue.js에서는 mixins를 통해 공통 함수 구현을 할 수 있도록 함
+
+
+29.
+Mock 서버에 API 등록하기
+Postman 실행 후 좌측 패널의 Collections 탭에서
+Mock 서버에 마우스를 올려 더보기 버튼을 누른 뒤 `Add Request`를 클릭
+이후 과정은 `basic-vue/vue-project-mock-server/ApiRegistration.pdf`에서 확인
+
+
+30.
+Vue의 가장 큰 장점은 컴포넌트를 재활용하는 데에 있음
+vue-project-advanced-component에서는 컴포넌트에서 다른 컴포넌트를 사용하는 방법을 구현함
+(1) 컴포넌트 간의 데이터 및 이벤트 전달 방법
+(2) 컴포넌트의 재활용성을 높여주는 slot 기능 사용 방법
+
+
+31.
+vue preset 히스토리 삭제하는 법
+>> vue config
+>> vue config --edit
+>> vue config --delete presets.YOUR_PRESET_NAME
+
+
+32.
+컴포넌트에서 다른 컴포넌트를 사용하는 방법
+=> 사용할 컴포넌트를 import한 후
+=> 현재 컴포넌트의 템플릿에서 사용할 컴포넌트를 components 속성에 등록
+'''
+<template>
+	<div>
+		<ComponentA />
+		<ComponentB />
+	</div>
+</template>
+<script>
+import ComponentA from '../components/ComponentA'
+import ComponentB from '../components/ComponentB'
+
+export default {
+	components: {
+		ComponentA, ComponentB
+	}
+}
+</script>
+'''
+
+
+33.
+Props 유효성 검사
+'''
+props: {
+	propA: Number,
+	propB: [String, Number],
+	propC: {
+		type: String,
+		required: true	// 부모컴포넌트로부터 반드시 데이터가 전달되어야 함
+	}
+	propD: {
+		type: String,
+		default: 100	// 기본값 설정
+	},
+	propE: {
+		type: Object,
+		default: function() {
+			return {message: 'Hello'}
+		}
+	},
+	propF: {	// 커스텀 유효성 검사 함수
+		validator: function(value) {
+			// 값이 아래 셋 중 하나와 일치해야 함
+			return ['success', 'warning', 'danger'].indexOf(value) !== -1
+		}
+	},
+	propG: {
+		type: Function,
+		default: function() {
+			return 'Default Function'
+		}
+	}
+}
+'''
+
+
+34.
+[ ref, $refs ]
+Dom을 직접 접근하여 컨트롤 해야 될 경우가 생김
+이때 사용하는 속성이 ref, $refs
+=> JS의 querySelector, getElementsByClassName, getElementById 와 같은 역할
+'''
+<template>
+  <div>
+    <input type="text" ref="target">
+  </div>
+</template>
+
+<script>
+  export default {
+	// $refs는 component가 렌더링 된 후에 접근이 가능
+	// beforeCreate또는 created에서 $refs를 접근하게 된다면 undefined가 출력됨
+    mounted(){
+      console.log('target', this.$refs.target);
+    }
+  }
+</script>
+'''
+
+
+35.
+ref, $refs 사용 예시
+'''
+<!-- App.vue -->
+<template>
+  <Component ref="vue" />
+</template>
+
+<script>
+import Component from './components/Component.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Component,
+  },
+  mounted() {
+    console.log(this.$refs.vue);
+    console.log(this.$refs.vue.$refs);
+    console.log(this.$refs.vue.$refs.js);
+    console.log(this.$refs.vue.$refs.react);
+  },
+</script>
+
+<!-- Component.vue -->
+<template>
+  <h1>Hello Vue.js!!</h1>
+  <h1 ref="js">Javascript</h1>
+  <h1 ref="react">React</h1>
+</template>
+
+<script>
+export default {};
+</script>
+'''
+
+
+36.
+[ emit ]
+이벤트 emit은 하위 컴포넌트에서 상위 컴포넌트로 이벤트를 전달하기 위한 방식
+이벤트를 전달하여 상위 컴포넌트는 하위 컴포넌트에서 전달하는 값을 받을 수 있음
+
+cf.
+- Props : 부모 컴포넌트에서 자식 컴포넌트로 데이터를 전달할 때 사용됩니다.
+- Emit : 자식 컴포넌트에서 부모 컴포넌트로 데이터를 전달할 때 사용됩니다.
+
+cf. props, emit 규칙
+- 전달 키와 받는 키가 동일해야 한다.
+- 받는 키를 등록해줘야 합니다.
+
+cf.
+props, emit을 사용할 때 이벤트 이름이나 메서드 이름을 camel 표기법으로 하면 안됨
+대신, kebab 표기법(xx-xx)을 사용해야 함
+
+
+37.
+[ Slot ]
+slot은 컴포넌트 내에서 다른 컴포넌트를 사용할 때 쓰는
+컴포넌트의 마크업을 재정의하거나 확장하는 기능
+
+
+38.
+Vue 개발 시 특별한 경우가 아니라면 HTML 객체에 바로 접근한 코드 구현 지양
+어쩔 수 없이 JS에서 HTML 객체로 바로 접근해야 하는 경우,
+HTML 태그에 id 대신 ref를 사용
+이때, this.$refs를 이용해 ref 속성에 지정된 이름으로 HTML 객체에 접근 가능
+=> <input type="text" ref="title" />
+=> this.$refs.title.focus()
+
+
+39.
+[ Mixins ]
+믹스인(Mixins) :
+기능을 따로 구현하고, 필요할 때마다 컴포넌트에 결합해서 사용하는 것
+=> 공통 모듈의 기능을 함
+=> 메서드를 정의해서 사용하거나, Vue의 라이프사이클 훅, 이벤트 훅까지 사용 가능
+
+
+40.
+[ Vuex(v4.x) ]
+애플리케이션이 복잡해지고 컴포넌트 수가 많아짐에 따라, 컴포넌트 간 데이터 전달이 어려워짐
+Vuex는 Vue에서 모든 컴포넌트가 접근 가능한 중앙 집중식 저장소를 두고,
+데이터 관리 및 상태 관리를 할 수 있도록 하는 상태 관리 패턴 + 라이브러리
+=> 데이터를 store에 저장하고 프로젝트 전체에서 사용할 수 있도록 함
+
+
+41.
+Vuex 설치 명령어
+>> npm install vuex@next --save

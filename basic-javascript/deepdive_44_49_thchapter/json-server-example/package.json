@@ -1,0 +1,13 @@
+{
+  "name": "json-server-example",
+  "version": "1.0.0",
+  "scripts": {
+    "start":"json-server --watch db.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  }
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <script crossorigin src="https://unpkg.com.react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com.react-dom@16/umd/react-dom.development.js"></script>
+        <!-- Babel은 자바스크립트 안에서 HTML 태그를 사용할 수 있도록 함 -->
+        <script src="'https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="root"></div>
+        <!-- 자바스크립트 안에서 HTML 태그를 쓰기 위한 타입 설정 -->
+        <script type="text/babel">
+            class LikeButton extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        liked: false,
+                    };
+                }
+
+                render() {
+                    // JSX : Javascript + XML => Javascript에 XML을 추가한 확장한 문법
+                    // JSX를 사용한 것은 모두 createElement라고 볼 수 있음
+                    return <button
+                        type='submit'
+                        onClick={()=>{this.setState({liked: true})}}
+                    >{this.state.liked === true ? 'Liked' : 'Like'}</button>;
+                }
+            }
+        </script>
+        <script type="text/babel">
+            // <LikeButton />과 같은 표현으로, React.createElement를 대체함
+            // ReactDOM.render(<LikeButton />, document.querySelector('#root'));
+            
+            // Like 버튼을 여러 개 만들고 싶다면,
+            // 만들어놓은 <LikeButton /> 컴포넌트를 여러 번 사용하면 됨
+            ReactDOM.render(
+                <div><LikeButton /><LikeButton /><LikeButton /></div>,
+                document.querySelector('#root')
+            );
+
+        </script>
+    </body>
+</html>

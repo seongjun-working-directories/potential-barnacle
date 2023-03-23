@@ -1,0 +1,44 @@
+{
+  // Use IntelliSense to learn about possible Node.js debug attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "backend",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--preserve-symlinks-main",
+        "-r",
+        "${workspaceFolder}/node_modules/ts-node/register",
+        "-r",
+        "${workspaceFolder}/node_modules/tsconfig-paths/register"
+      ],
+      "args": [
+        "src/server.ts"
+      ],
+      "cwd": "${workspaceRoot}",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": ["<node_internals>/**", "node_modules/**"],
+      "outputCapture": "std",
+      "trace": true,
+      "env": {
+        "TS_NODE_PROJECT": "tsconfig.node.json",
+        "TS_NODE_TRANSPILE_ONLY": "true"
+      }
+    },
+    {
+      "name": "backendPreCompile",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/server.ts",
+      "preLaunchTask": "tsc: build - tsconfig.node.json",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "skipFiles": ["<node_internals>/**", "node_modules/**"],
+      "outputCapture": "std",
+      "trace": true
+    }
+  ]
+}

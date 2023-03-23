@@ -1,0 +1,3 @@
+npm install puppeteer dotenv
+npm install puppeteer-extra puppeteer-extra-plugin-stealth
+npm install ytdl-core

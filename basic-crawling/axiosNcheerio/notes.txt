@@ -1,0 +1,17 @@
+1.
+npm install axios cheerio
+npm install xlsx
+
+2.
+웹사이트 서버의 보안이 허술한 경우,
+axios와 cheerio 패키지를 이용해 간단하게 크롤링 가능.
+
+3.
+axios는 ajax 라이브러리로, 페이지를 요청하면 페이지에 대한 응답을 받음.
+cheerio는 html 파싱을 위한 패키지임.
+
+4.
+엑셀을 읽어서 엑셀에 들어있는 링크를 axios에 담아서 요청을 보냄.
+응답으로 HTML에 대한 정보가 오면 cheerio로 파싱함.
+
+5.

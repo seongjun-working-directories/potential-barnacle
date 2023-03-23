@@ -1,0 +1,16 @@
+{
+  "name": "autosigninsignout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "keywords": [],
+  "author": "Park",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "puppeteer": "^13.4.0"
+  }
+}

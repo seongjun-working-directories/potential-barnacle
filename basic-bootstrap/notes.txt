@@ -1,0 +1,12 @@
+0.
+[ BOOTSTRAP URL ]
+https://getbootstrap.com/
+
+1.
+Download Bootstrap
+>> npm install bootstrap@5.2.0
+
+2.
+이미 제작된 부트스트랩 템플릿을 사용할 수 있는 사이트
+https://themes.getbootstrap.com/
+https://wrapbootstrap.com/

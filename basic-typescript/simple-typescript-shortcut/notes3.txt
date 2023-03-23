@@ -1,0 +1,219 @@
+23.
+실전 타입스크립트 코드 작성하기
+-- Conditional Type 을 활용하기
+-- Overloading 을 활용하기
+-- readonly, as const 를 남발하기
+-- optional type 보단 Union Type 을 사용하기
+-- never 활용하기
+
+
+24. @types가 존재하지 않는 경우, 직접 만들어서 사용할 것
+(feat. https://m.blog.naver.com/psj9102/221658291488)
+
+-- 모듈사용하기 전에 @types/모듈이름 을 검색해서 typescript 에서 사용가능한 모듈인지 확인하라
+-- 만약 @types/모듈이름 이 검색되지 않는다면 만들어라
+
+​일단 @types 가 없는 모듈을 찾아봤더니 nl2br 이라는 모듈은 없었습니다
+그래서 nl2br 모듈로 테스트해봤습니다
+프로젝트 폴더를 하나 생성하고, typescript, ts-node 를 global 설치해줍니다
+npx, npm 둘중에 뭘 사용해도 됩니다
+
+>> npm install -g typescript ts-node
+
+tsconfig.json 을 만들어줍니다
+
+>> tsc --init
+
+그럼 프로젝트 폴더에 tsconfig.json 이 만들어 질겁니다
+tsconfig.json 에 들어가면 여러가지 옵션이 있는데 그중 typeRoots 옵션의 주석을 제거해줍니다
+그리고 거기에 @types 를 작성할 경로를 만들어줍니다
+
+// tsconfig.json
+{
+///
+    "typeRoots": ["./node_modules/@types", "./@types"]
+///
+}
+
+우선 ./node_modules/@types 는 기본적으로 있어야하는 경로입니다
+우리가 @types/express 를 설치하면 ./node_modules/@types 에 설치되기 때문입니다
+두번째 인덱스로 넣은 ./@types  에 우리가 선언할 type 을 폴더 및 파일을 넣을겁니다
+이제 nl2br 을 설치해줍니다
+
+> npm install --save nl2br
+
+이제 import 를 한번 해보겠습니다
+
+// index.ts
+import nl2br from "nl2br";
+
+이렇게 하면 빨간줄로 에러가 날겁니다
+@types/nl2br 을 설치하라고 하겠죠
+하지만 @types/nl2br 은 찾아봐도 없을 겁니다
+그럼 이제 아까 선언한 ./@types 폴더를 만들고, 그 안에 nl2br 의 type 을 선언해보겠습니다
+./@types 에 nl2br 폴더를 만들어주고 index.d.ts 를 만들어줍니다
+
+// ./@types/nl2br/index.d.ts
+declare module "nl2br";
+
+이렇게 하면 아까 import 했던 곳에서의 에러는 사라질 겁니다
+그리고 사용이 가능하죠 대신 suggest 를 사용하는 건 힘들거라고 생각됩니다
+declare 을 잘하면 type suggest 도 될 것 같습니다
+
+# 다른 해결 방법
+typescript 2.1 에서 부터는 declare 없어도 일반적인 모듈을 사용할 수 있다고 합니다
+만약 에러가 난다면 tsconfig.json 에서 noImplicitAny 의 주석을 풀고 다시 해보시기 바랍니다
+관련자료는 아래에 있습니다
+https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-1.html#untyped-imports
+
+
+25. conditional type 을 활용하기
+-- Item<T> - T 에 따라 달라지는 container
+'''
+interface StringContainer {
+  value: string;
+  format(): string;
+  split(): string[];
+}
+
+interface NumberContainer {
+  value: number;
+  nearestPrime: number;
+  round(): number;
+}
+
+type Item1<T> = {
+  id: T,
+  container: any;
+};
+
+const item1: Item1<string> = {
+  id: "aaaaaa",
+  container: null
+};
+// 위의 상황에서 id가 string일 경우 StringContainer를,
+// number일 경우 NumberContainer를 사용하고자 한다면,
+// 다음과 같이 코드 작성
+
+type Item2<T> = {
+  id: T;
+  container: T extends string ? StringContainer : NumberContainer;
+};
+
+const item2: Item2<string> = {
+  id: 'aaaaaa',
+  container: null, // Type 'null' is not assignable to type 'StringContainer'.
+};
+
+// T 가 string 이면 StringContainer
+// T 가 number 면 NumberContainer
+// 아니면 사용 불가
+type Item3<T> = {
+  id: T extends string | number ? T : never;
+  container: T extends string
+    ? StringContainer
+    : T extends number
+    ? NumberContainer
+    : never;
+};
+
+const item3: Item3<boolean> = {
+  id: true, // Type 'boolean' is not assignable to type 'never'.
+  container: null, // Type 'null' is not assignable to type 'never'.
+};
+'''
+
+
+26. conditional type 을 활용하기 - ArrayFilter<T>
+'''
+type ArrayFilter<T> = T extends any[] ? T : never;
+
+type StringsOrNumbers = ArrayFilter<string | number | string[] | number[]>;
+// 1. string | number | string[] | number[]
+// 2. never | never | string[] | number[]
+// 3. string[] | number[] // 최종 결과값
+'''
+
+
+27.  Table or Dino
+'''
+interface Table {
+  id: string;
+  chairs: string[];
+}
+
+interface Dino {
+  id: number;
+  legs: number;
+}
+
+interface World {
+  // T extends string | number가 제약을 거는 역할을 함
+  getItem<T extends string | number>(id: T): T extends string ? Table : Dino;
+}
+
+let world: World = null as any;
+
+const dino = world.getItem(10);
+const what = world.getItem(true); // Error! Argument of type 'boolean' is not assignable to parameter of type 'string | number'.ts(2345)
+'''
+
+
+28. Flatten<T>
+'''
+type Flatten<T> = T extends any[]
+  ? T[number]
+  : T extends object
+  ? T[keyof T]
+  : T;
+
+
+const numbers = [1, 2, 3];
+type NumbersArrayFlattened = Flatten<typeof numbers>;
+// 1. number[]
+// 2. number
+
+const person = {
+  name: 'Mark',
+  age: 38
+};
+                             
+type SomeObjectFlattened = Flatten<typeof person>;
+// 1. keyof T --> "id" | "name"
+// 2. T["id" | "name"] --> T["id"] | T["name"] --> number | string
+
+const isMale = true;
+type SomeBooleanFlattened = Flatten<typeof isMale>;
+// true
+'''
+
+
+29. infer
+'''
+type UnpackPromise<T> = T extends Promise<infer K>[] ? K : any;
+const promises = [Promise.resolve('Mark'), Promise.resolve(38)];
+
+type Expected = UnpackPromise<typeof promises>; // string | number
+'''
+
+
+30. 함수 리턴 타입 알아내기 - MyReturnType
+'''
+function plus1(seed: number): number {
+  return seed + 1;
+}
+
+type MyReturnType<T extends (...args: any) => any> = T extends (
+  ...args: any
+) => infer R
+  ? R
+  : any;
+
+type Id = MyReturnType<typeof plus1>;
+
+lookupEntity(plus1(10));
+
+function lookupEntity(id: Id) {
+  // query DB for entity by ID
+}
+'''

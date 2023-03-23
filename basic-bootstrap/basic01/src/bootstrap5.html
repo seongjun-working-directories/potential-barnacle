@@ -1,0 +1,84 @@
+<!-- 참고: https://getbootstrap.com/docs/5.2/utilities/colors/ -->
+<!-- utilities는 배치나 스타일 등을 조정할 때 주로 사용됨 -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <!-- colors 예시 -->
+    <p class="text-primary">.text-primary</p>
+    <p class="text-secondary">.text-secondary</p>
+    <p class="text-success">.text-success</p>
+    <p class="text-danger">.text-danger</p>
+    <p class="text-warning bg-dark">.text-warning</p>
+    <p class="text-info bg-dark">.text-info</p>
+    <p class="text-light bg-dark">.text-light</p>
+    <p class="text-dark">.text-dark</p>
+    <p class="text-body">.text-body</p>
+    <p class="text-muted">.text-muted</p>
+    <p class="text-white bg-dark">.text-white</p>
+    <p class="text-black-50">.text-black-50</p>
+    <p class="text-white-50 bg-dark">.text-white-50</p>
+
+    <!-- background 예시 -->
+    <div class="p-3 mb-2 bg-primary text-white">.bg-primary</div>
+    <div class="p-3 mb-2 bg-secondary text-white">.bg-secondary</div>
+    <div class="p-3 mb-2 bg-success text-white">.bg-success</div>
+    <div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
+    <div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
+    <div class="p-3 mb-2 bg-info text-dark">.bg-info</div>
+    <div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
+    <div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
+    <div class="p-3 mb-2 bg-body text-dark">.bg-body</div>
+    <div class="p-3 mb-2 bg-white text-dark">.bg-white</div>
+    <div class="p-3 mb-2 bg-transparent text-dark">.bg-transparent</div>
+
+    <!-- background gradient 예시 -->
+    <div class="p-3 mb-2 bg-secondary text-white bg-gradient">.bg-secondary</div>
+
+    <!-- display 예시 -->
+    <!-- 콘텐츠가 화면에 보이고 보이지 않고를 관리하기 위해 사용 -->
+    <!-- ex) 브라우저에서는 6개의 콘텐츠를, 모바일에선 4개의 콘텐츠를 보이고 싶을 때 사용 -->
+    <!--
+      Screen    size	          Class
+      Hidden    on all	        .d-none
+      Hidden    only on xs	    .d-none .d-sm-block
+      Hidden    only on sm	    .d-sm-none .d-md-block
+      Hidden    only on md	    .d-md-none .d-lg-block
+      Hidden    only on lg	    .d-lg-none .d-xl-block
+      Hidden    only on xl	    .d-xl-none
+      Hidden    only on xxl	    .d-xxl-none .d-xxl-block
+      Visible   on all	        .d-block
+      Visible   only on xs	    .d-block .d-sm-none
+      Visible   only on sm	    .d-none .d-sm-block .d-md-none
+      Visible   only on md	    .d-none .d-md-block .d-lg-none
+      Visible   only on lg	    .d-none .d-lg-block .d-xl-none
+      Visible   only on xl	    .d-none .d-xl-block .d-xxl-none
+      Visible   only on xxl	    .d-none .d-xxl-block
+    -->
+    <div class="d-lg-none">hide on lg and wider screens</div>
+    <div class="d-none d-lg-block">hide on screens smaller than lg</div>
+
+    <!-- interactions 예시 -->
+    <p class="user-select-all">This paragraph will be entirely selected when clicked by the user.</p>
+    <p class="user-select-auto">This paragraph has default select behavior.</p>
+    <p class="user-select-none">This paragraph will not be selectable when clicked by the user.</p>
+
+    <!-- text 예시 -->
+    <p class="text-start">Start aligned text on all viewport sizes.</p>
+    <p class="text-center">Center aligned text on all viewport sizes.</p>
+    <p class="text-end">End aligned text on all viewport sizes.</p>
+
+    <p class="text-sm-start">Start aligned text on viewports sized SM (small) or wider.</p>
+    <p class="text-md-start">Start aligned text on viewports sized MD (medium) or wider.</p>
+    <p class="text-lg-start">Start aligned text on viewports sized LG (large) or wider.</p>
+    <p class="text-xl-start">Start aligned text on viewports sized XL (extra-large) or wider.</p>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  </body>
+</html>

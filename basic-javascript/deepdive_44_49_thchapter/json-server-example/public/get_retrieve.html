@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<body>
+        <pre></pre>
+        <script>
+            const xhr = new XMLHttpRequest();
+
+            // HTTP 요청 초기화
+            // todos 리소스에서 id를 사용해 특정 todo 취득(retrieve)
+            xhr.open('GET', '/todos/1');
+            xhr.send();
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    document.querySelector('pre').textContent = xhr.response;
+                }
+                else {
+                    console.error('Error', xhr.status, xhr.statusText);
+                }
+            };
+        </script>
+</body>
+</html>

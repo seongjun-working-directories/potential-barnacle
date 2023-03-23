@@ -1,0 +1,139 @@
+1.
+npm install puppeteer axios cheerio xlsx
+
+2.
+[querySelector와 CSS 선택자]
+(1)
+개발자 도구(F12)의 콘솔창에서 `$()`는 document.querySelector의 역할을 함.
+개발자 도구(F12)의 콘솔창에서 `$$()`는 document.querySelectorAll의 역할을 함.
+둘 모두 puppeteer api에서 사용 가능.
+(2)
+querySelector는 선택자를 인수로 받아 해당 선택자가 가지고 있는 값을 반환.
+(3)
+document.querySelector는 일치하는 가장 처음의 태그를 선택하는 것.
+document.querySelectorAll은 일치하는 모든 태그를 선택하는 것.
+(4)
+#은 태그의 아이디, .은 태그의 클래스를 의미함.
+(5)
+document.querySelctor로 특정할 수 없다면, 상위에 위치한 태그와 선택자를 조합해서 특정해야 함.
+a. 띄어쓰기는 조상-자손 관계를 의미. ex) $('div a img');
+b. Right Angle Bracket(>)은 직접 연결된 부모-자식 관계를 의미. ex) $('.poster>a>img');
+c. A 태그, B 아이디, C 클래스, D 클래스 등을 연달아 붙여쓰는 것은
+-> A 태그이면서, B아이디이면서, C 클래스, D 클래스임을 의미. ex) $('div.score.score_left .star_score');
+(6)
+태그의 속성은 대괄호로 표현. ex) $('.poster a img[src]');
+
+3.
+[콜백, 프로미스, async/await]
+(1) 콜백 vs 프로미스
+// 콜백
+Users.findOne('zero', (err, user)=>{
+    if (err) {
+        return console.error(err);
+    }
+    console.log(user);
+    Users.update('zero', 'nero', (err, updatedUser)=>{
+        if (err) {
+            return console.error(err);
+        }
+        console.log(updatedUser);
+        Users.remove('nero', (err, removedUser)=>{
+            if (err) {
+                return console.error(err);
+            }
+            console.log(removedUser);
+        });
+    });
+});
+
+// 프로미스
+User.findOne('zero')
+    .then((user)=>{
+        console.log(user);
+        return Users.update('zero', 'nero');
+    })
+    .then((updatedUser)=>{
+        console.log(updatedUser);
+        return Users.remove('nero');
+    })
+    .then((removedUser)=>{
+        console.log(removedUser);
+    })
+    .catch(err) {
+        console.error(err);
+    };
+
+(2) 프로미스 선언 및 초기화
+ex)
+const plus = new Promise((resolve, reject)=>{
+    const a = 1;
+    const b = 2;
+    if (a+b>2) {
+        resolve(a+b);
+    }
+    else {
+        reject(a+b);
+    }
+});
+
+plus
+    .then((success)=>{
+        console.log(success);
+    })
+    .catch((fail)=>{
+        console.error(fail);
+    });
+
+(3) 무조건 성공 또는 무조건 실패
+let promise = Promise.resolve('SUCCESS');
+promise = Promise.reject('FAILURE');
+
+(4) Promise.all
+여러 프로미스를 동시에 실행할 때 사용.
+단, 하나라도 실패할 경우 catch로 넘어감.
+ex)
+Promise.all(Users.findOne(), Users.remove(), Users.update());
+
+(5) Promise의 가장 중요한 특징
+***Promise는 결과값을 가지고 있지만,
+.then, .catch를 붙이기 전까지 그 값을 반환하지 않는 것.***
+--> 데이터를 가져오는 부분과 데이터를 사용하는 부분을 나눌 수 있음!!
+
+(6) async/await
+Promise로 가독성을 높인다고 해도, 코드가 순서대로 실행되지 않는 것은 콜백과 같음.
+따라서, 순서를 보장하기 위해 async/await을 사용함.
+ex)
+Users.findOne('zero')
+    .then((user)=>{
+        console.log(user);
+        return Users.update('zero', 'nero');
+    })
+    .then((updatedUser)=>{
+        console.log(updatedUser);
+        return Users.remove('nero');
+    })
+    .then((removedUser)=>{
+        console.log(removedUser);
+    })
+    .catch((err)=>{
+        console.error(err);
+    });
+console.log('Find ALL?');
+
+// async/await 사용 시
+async func() => {
+    try {
+        const user = await Users.findOne('zero');
+        console.log(user);
+        const updatedUser = await Users.update('zero', 'nero');
+        console.log(updatedUser);
+        const removedUser = await Users.remove('nero');
+        console.log(removedUser);
+        console.log('Find ALL!');
+    }
+    catch(err) {
+        console.error(err);
+    };
+}
+
+4.

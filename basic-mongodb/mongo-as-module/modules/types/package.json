@@ -1,0 +1,38 @@
+{
+  "name": "@mongomodule/types",
+  "version": "1.0.0",
+  "description": "",
+  "type": "commonjs",
+  "main": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx rimraf dist && npx tsc --project tsconfig.cjs.json && tscpaths -p tsconfig.cjs.json -s ./src -o ./dist/cjs && npx tsc --project tsconfig.esm.json && tscpaths -p tsconfig.esm.json -s ./src -o ./dist/esm"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.1",
+    "@types/eslint": "8.4.3",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^16.11.7",
+    "@types/rimraf": "^3.0.2",
+    "@typescript-eslint/eslint-plugin": "5.29.0",
+    "@typescript-eslint/parser": "5.29.0",
+    "chai": "^4.3.6",
+    "eslint": "^8.18.0",
+    "mocha": "^10.0.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.8.1",
+    "tsconfig-paths": "^4.0.0",
+    "tscpaths": "^0.0.9",
+    "typescript": "~4.7.4"
+  },
+  "author": "",
+  "license": "MIT",
+  "exports": {
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js",
+    "default": "./dist/esm/index.js"
+  }
+}
